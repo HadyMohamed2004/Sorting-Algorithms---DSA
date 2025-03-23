@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "E:/[02] FCAI - CU/[04] Year 2 - 2nd Term/[02] CS214 - Data Structures/[02] Assignments/Assignment 1/Sorting_Algorithms/cmake-build-debug",
-		"source" : "E:/[02] FCAI - CU/[04] Year 2 - 2nd Term/[02] CS214 - Data Structures/[02] Assignments/Assignment 1/Sorting_Algorithms"
+		"build" : "C:/Users/Lenovo/Documents/Vole/Sorting-Algorithms---DSA/cmake-build-debug",
+		"source" : "C:/Users/Lenovo/Documents/Vole/Sorting-Algorithms---DSA"
 	},
 	"version" : 
 	{
