@@ -167,27 +167,6 @@ public:
             "8. Radix Sort (int only)\n"
             "9. Bucket Sort\n"
             "Enter your choice (1-9): ";
-        int choice;
-        cin>>choice;
-            switch (choice) {
-                case 1:
-                    measureSortTime(&SortingSystem::insertion_sort); break;
-                case 2:
-                    measureSortTime(&SortingSystem::selection_sort); break;
-                case 3:
-                    measureSortTime(&SortingSystem::bubble_sort); break;
-                case 4:
-                    measureSortTime(&SortingSystem::shell_sort); break;
-                case 5:
-                    measureSortTime(&SortingSystem::merging_sort, 0, size - 1);
-                break;
-                default:
-                    cout<<"Wrong choice!\n"<<endl;
-            }
-
-        cout << "Sorted data: ";
-        displayData();
-
         }
 
 };
@@ -208,6 +187,26 @@ int main() {
 
         sorting->setData(filename);
         sorting->showMenu();
+        int choice;
+        cin>>choice;
+        switch (choice) {
+            case 1:
+                sorting->measureSortTime(&SortingSystem<int>::insertion_sort); break;
+            case 2:
+                sorting->measureSortTime(&SortingSystem<int>::selection_sort); break;
+            case 3:
+                sorting->measureSortTime(&SortingSystem<int>::bubble_sort); break;
+            case 4:
+                sorting->measureSortTime(&SortingSystem<int>::shell_sort); break;
+            case 5:
+                sorting->measureSortTime(&SortingSystem<int>::merging_sort, 0, size - 1);
+            break;
+            default:
+                cout<<"Wrong choice!\n"<<endl;
+        }
+
+        cout << "Sorted data: ";
+        sorting->displayData();
 
         delete sorting;
 
@@ -219,6 +218,5 @@ int main() {
         }
     }
 
-    cout << "Hady";
     return 0;
 }
