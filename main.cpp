@@ -53,13 +53,13 @@ public:
         }
     }
 
-    void setData(const vector<T>& inputData) {
+    void setData(T* inputData,int n) {
         delete[] data;
-        size = inputData.size();
+        size = n;
         data = new T[size];
 
         for (int i = 0; i < size; i++) {
-            data[i] = static_cast<T>(inputData[i]);
+            data[i] = inputData[i];
         }
     }
 
@@ -123,20 +123,37 @@ public:
 
 
     void merge(int start, int middle, int end) {
-        vector<T> temp(data + start, data + middle + 1);
-        vector<T> temp1(data + middle + 1, data + end + 1);
-        int i = 0, j = 0, k = start;
+        int left= middle-start+1;
+        int right=end-middle;
+        T* leftData = new T[left];
+        T* rightData = new T[right];
 
-        while (i < temp.size() && j < temp1.size()) {
-            if (temp[i] <= temp1[j]) {
-                data[k++] = temp[i++];
-            } else {
-                data[k++] = temp1[j++];
-            }
+        for (int i = 0; i < left; i++) {
+            leftData[i] = data[start + i];
         }
 
-        while (i < temp.size()) data[k++] = temp[i++];
-        while (j < temp1.size()) data[k++] = temp1[j++];
+        for (int i = 0; i < right; i++) {
+            rightData[i] = data[middle + 1 + i];
+        }
+
+        int i = 0, j = 0, k = start;
+
+        while (i < left && j < right) {
+            if (leftData[i] <= rightData[j]) {
+                data[k++] = leftData[i++];
+            }
+            else {
+                data[k++] = rightData[j++];
+            }
+        }
+        while (i < left) {
+            data[k++] = leftData[i++];
+        }
+        while (j < right) {
+            data[k++] = rightData[j++];
+        }
+        delete[] leftData;
+        delete[] rightData;
     }
 
     void displayData() {
@@ -165,7 +182,7 @@ public:
     }
 
 
-    void showMenu() {
+    void static showMenu() {
             cout<<"Select a sorting algorithm:\n"
             "1. Insertion Sort\n"
             "2. Selection Sort\n"
@@ -203,113 +220,117 @@ int main() {
               "Enter your choice (1-2): ";
         cin>>choice;
         if (type == 1) {
-            unique_ptr<SortingSystem<int>> sorting = make_unique<SortingSystem<int>>(n);
+            SortingSystem<int> sorting(n);
             if (choice == 1) {
                 cout<<"Enter file name: ";
                 cin>>filename;
-                sorting->setData(filename);
+                sorting.setData(filename);
             }
             else if (choice == 2) {
-                vector<int> data(n);
+                int* data=new int[n];
                 cout << "Enter " << n << " integers: ";
                 for (int i = 0; i < n; i++) cin >> data[i];
-                sorting->setData(data);
+                sorting.setData(data,n);
+                delete [] data;
             }
-            sorting->showMenu();
+            sorting.showMenu();
             cin >> choice;
             switch (choice) {
-                case 1: sorting->measureSortTime(&SortingSystem<int>::insertion_sort); break;
-                case 2: sorting->measureSortTime(&SortingSystem<int>::selection_sort); break;
-                case 3: sorting->measureSortTime(&SortingSystem<int>::bubble_sort); break;
-                case 4: sorting->measureSortTime(&SortingSystem<int>::shell_sort); break;
-                case 5: sorting->measureSortTime(&SortingSystem<int>::merging_sort, 0, n - 1); break;
+                case 1: sorting.measureSortTime(&SortingSystem<int>::insertion_sort); break;
+                case 2: sorting.measureSortTime(&SortingSystem<int>::selection_sort); break;
+                case 3: sorting.measureSortTime(&SortingSystem<int>::bubble_sort); break;
+                case 4: sorting.measureSortTime(&SortingSystem<int>::shell_sort); break;
+                case 5: sorting.measureSortTime(&SortingSystem<int>::merging_sort, 0, n - 1); break;
                 default: cout << "Invalid choice!\n";
             }
 
             cout << "Sorted data: ";
-            sorting->displayData();
+            sorting.displayData();
         }
         else if (type == 2) {
-            unique_ptr<SortingSystem<string>> sorting = make_unique<SortingSystem<string>>(n);
+            SortingSystem<string> sorting(n);
             if (choice == 1) {
                 cout<<"Enter file name: ";
                 cin>>filename;
-                sorting->setData(filename);
+                sorting.setData(filename);
             }
             else if (choice == 2) {
-                vector<string> data(n);
+                string* data=new string[n];
                 cout << "Enter " << n << " strings: ";
                 for (int i = 0; i < n; i++) cin >> data[i];
-                sorting->setData(data);
+                sorting.setData(data,n);
+                delete [] data;
             }
-            sorting->showMenu();
+            sorting.showMenu();
             cin >> choice;
             switch (choice) {
-                case 1: sorting->measureSortTime(&SortingSystem<string>::insertion_sort); break;
-                case 2: sorting->measureSortTime(&SortingSystem<string>::selection_sort); break;
-                case 3: sorting->measureSortTime(&SortingSystem<string>::bubble_sort); break;
-                case 4: sorting->measureSortTime(&SortingSystem<string>::shell_sort); break;
-                case 5: sorting->measureSortTime(&SortingSystem<string>::merging_sort, 0, n - 1); break;
+                case 1: sorting.measureSortTime(&SortingSystem<string>::insertion_sort); break;
+                case 2: sorting.measureSortTime(&SortingSystem<string>::selection_sort); break;
+                case 3: sorting.measureSortTime(&SortingSystem<string>::bubble_sort); break;
+                case 4: sorting.measureSortTime(&SortingSystem<string>::shell_sort); break;
+                case 5: sorting.measureSortTime(&SortingSystem<string>::merging_sort, 0, n - 1); break;
                 default: cout << "Invalid choice!\n";
             }
 
             cout << "Sorted data: ";
-            sorting->displayData();
+            sorting.displayData();
         }
         else if (type == 3) {
-            unique_ptr<SortingSystem<float>> sorting = make_unique<SortingSystem<float>>(n);
+            SortingSystem<float> sorting(n);
             if (choice == 1) {
                 cout<<"Enter file name: ";
                 cin>>filename;
-                sorting->setData(filename);
+                sorting.setData(filename);
             }
             else if (choice == 2) {
-            vector<float> data(n);
+            float* data=new float[n];
             cout << "Enter " << n << " float numbers: ";
             for (int i = 0; i < n; i++) cin >> data[i];
-            sorting->setData(data);
+                sorting.setData(data,n);
+                delete [] data;
             }
-            sorting->showMenu();
+            sorting.showMenu();
             cin >> choice;
             switch (choice) {
-                case 1: sorting->measureSortTime(&SortingSystem<float>::insertion_sort); break;
-                case 2: sorting->measureSortTime(&SortingSystem<float>::selection_sort); break;
-                case 3: sorting->measureSortTime(&SortingSystem<float>::bubble_sort); break;
-                case 4: sorting->measureSortTime(&SortingSystem<float>::shell_sort); break;
-                case 5: sorting->measureSortTime(&SortingSystem<float>::merging_sort, 0, n - 1); break;
+                case 1: sorting.measureSortTime(&SortingSystem<float>::insertion_sort); break;
+                case 2: sorting.measureSortTime(&SortingSystem<float>::selection_sort); break;
+                case 3: sorting.measureSortTime(&SortingSystem<float>::bubble_sort); break;
+                case 4: sorting.measureSortTime(&SortingSystem<float>::shell_sort); break;
+                case 5: sorting.measureSortTime(&SortingSystem<float>::merging_sort, 0, n - 1); break;
                 default: cout << "Invalid choice!\n";
             }
 
             cout << "Sorted data: ";
-            sorting->displayData();
+            sorting.displayData();
         }
         else if (type == 4) {
-            unique_ptr<SortingSystem<char>> sorting = make_unique<SortingSystem<char>>(n);
+            SortingSystem<char> sorting(n);
             if (choice == 1) {
                 cout<<"Enter file name: ";
                 cin>>filename;
-                sorting->setData(filename);
+                sorting.setData(filename);
             }
             else if (choice == 2) {
-                vector<char> data(n);
+                char* data=new char[n];
                 cout << "Enter " << n << " characters: ";
                 for (int i = 0; i < n; i++) cin >> data[i];
-                sorting->setData(data);
+                sorting.setData(data,n);
+                delete [] data;
             }
 
-            sorting->showMenu();
+            sorting.showMenu();
             cin >> choice;
             switch (choice) {
-                case 1: sorting->measureSortTime(&SortingSystem<char>::insertion_sort); break;
-                case 2: sorting->measureSortTime(&SortingSystem<char>::selection_sort); break;
-                case 3: sorting->measureSortTime(&SortingSystem<char>::bubble_sort); break;
-                case 4: sorting->measureSortTime(&SortingSystem<char>::shell_sort); break;
-                case 5: sorting->measureSortTime(&SortingSystem<char>::merging_sort, 0, n - 1); break;
+                case 1: sorting.measureSortTime(&SortingSystem<char>::insertion_sort); break;
+                case 2: sorting.measureSortTime(&SortingSystem<char>::selection_sort); break;
+                case 3: sorting.measureSortTime(&SortingSystem<char>::bubble_sort); break;
+                case 4: sorting.measureSortTime(&SortingSystem<char>::shell_sort); break;
+                case 5: sorting.measureSortTime(&SortingSystem<char>::merging_sort, 0, n - 1); break;
                 default: cout << "Invalid choice!\n";
             }
 
             cout << "Sorted data: ";
-            sorting->displayData();
+            sorting.displayData();
         }
         else {
             cout << "Invalid type selection!\n";
