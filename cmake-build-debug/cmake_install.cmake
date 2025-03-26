@@ -1,4 +1,4 @@
-# Install script for directory: D:/[02] FCAI - CU/[04] Year 2 - 2nd Term/[02] CS214 - Data Structures/[02] Assignments/Assignment 1/Sorting-Algorithms---DSA
+# Install script for directory: D:/[02] FCAI - CU/[04] Year 2 - 2nd Term/[02] CS214 - Data Structures/[02] Assignments/Assignment 1/Sorting-Algorithms-DSA
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -52,6 +52,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-  file(WRITE "D:/[02] FCAI - CU/[04] Year 2 - 2nd Term/[02] CS214 - Data Structures/[02] Assignments/Assignment 1/Sorting-Algorithms---DSA/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "D:/[02] FCAI - CU/[04] Year 2 - 2nd Term/[02] CS214 - Data Structures/[02] Assignments/Assignment 1/Sorting-Algorithms-DSA/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

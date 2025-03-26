@@ -110,7 +110,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "C:/Program Files/JetBrains/CLion 2024.3.3/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-windres.cmake"
   "C:/Program Files/JetBrains/CLion 2024.3.3/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows.cmake"
   "C:/Program Files/JetBrains/CLion 2024.3.3/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/WindowsPaths.cmake"
-  "D:/[02] FCAI - CU/[04] Year 2 - 2nd Term/[02] CS214 - Data Structures/[02] Assignments/Assignment 1/Sorting-Algorithms---DSA/CMakeLists.txt"
+  "D:/[02] FCAI - CU/[04] Year 2 - 2nd Term/[02] CS214 - Data Structures/[02] Assignments/Assignment 1/Sorting-Algorithms-DSA/CMakeLists.txt"
   "CMakeFiles/3.30.5/CMakeCCompiler.cmake"
   "CMakeFiles/3.30.5/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.30.5/CMakeRCCompiler.cmake"
