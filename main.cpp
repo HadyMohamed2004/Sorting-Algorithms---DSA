@@ -29,25 +29,13 @@ public:
             return;
         }
 
-        vector<T> tempdata;
         T temp;
 
-        while (file >> temp) {
-            tempdata.push_back(temp);
+        for (int i = 0; i < size && file >> temp; i++) {
+            data[i] = temp;
         }
         file.close();
 
-        if (tempdata.empty()) {
-            cout << "File is empty" << endl;
-            return;
-        }
-
-        delete[] data;
-        data = new T[size];
-
-        for (int i = 0; i < size; i++) {
-            data[i] = tempdata[i];
-        }
     }
 
     void setData(T *inputData, int n) {
@@ -160,6 +148,54 @@ public:
         int p = partition(left, right);
         quick_sort(left, p - 1);
         quick_sort(p + 1, right);
+    }
+
+    void bucket_sort() {
+        T min = data[0],max = data[0];
+        for (int i = 1; i < size; i++) {
+            if (data[i] < min) {
+                min = data[i];
+            }
+            if (data[i] > max) {
+                max = data[i];
+            }
+        }
+        int range=max - min + 1;
+
+        int n_buckets=size/2;
+        T **buckets=new T*[n_buckets];
+        int *buckets_size=new int[n_buckets]{0};
+
+        for (int i = 0; i < n_buckets; i++) {
+            buckets[i] = new T[size];
+        }
+
+        for (int i = 0; i < size; i++) {
+            int index=(n_buckets * (data[i] - min)) / range;
+            buckets[index][buckets_size[index]++] = data[i];
+        }
+
+        for (int i = 0; i < n_buckets; i++) {
+            for (int j=1;j<buckets_size[i];j++) {
+                T temp=buckets[i][j];
+                int k= j-1;
+                while (k>=0 && buckets[i][k] > temp) {
+                    buckets[i][k+1]=buckets[i][k];
+                    k--;
+                }
+                buckets[i][k+1]=temp;
+            }
+        }
+        int index=0;
+        for (int i=0;i<n_buckets;i++) {
+            for (int j=0;j<buckets_size[i];j++) {
+                data[index++] = buckets[i][j];
+            }
+            delete[] buckets[i];
+        }
+
+        delete[] buckets;
+        delete[] buckets_size;
     }
 
     int partition(int left, int right) {
@@ -279,6 +315,9 @@ int main() {
                     break;
                 case 6: sorting.measureSortTime(&SortingSystem<int>::quick_sort, 0, n - 1);
                     break;
+                case 9: sorting.measureSortTime(&SortingSystem<int>::bucket_sort);
+                    break;
+
                 default: cout << "Invalid choice!\n";
             }
 
@@ -341,6 +380,7 @@ int main() {
                     break;
                 case 5: sorting.measureSortTime(&SortingSystem<float>::merging_sort, 0, n - 1);
                     break;
+                case 9: sorting.measureSortTime(&SortingSystem<float>::bucket_sort);
                 default: cout << "Invalid choice!\n";
             }
 
@@ -373,6 +413,8 @@ int main() {
                     break;
                 case 5: sorting.measureSortTime(&SortingSystem<char>::merging_sort, 0, n - 1);
                     break;
+                case 9: sorting.measureSortTime(&SortingSystem<char>::bucket_sort);
+                break;
                 default: cout << "Invalid choice!\n";
             }
 
