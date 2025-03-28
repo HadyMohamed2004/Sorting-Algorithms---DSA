@@ -10,7 +10,7 @@ using namespace std;
 template <typename T>
 string to_string(const T& value) {
     ostringstream oss;
-    oss << value;  // Try to use the stream to convert the value
+    oss << value;
     return oss.str();
 }
 
@@ -121,7 +121,6 @@ public:
         if (start >= end)
             return;
         int mid = (start + end) / 2;
-        cout << "Mid = " << mid << endl;
 
         merging_sort(start, mid);
         merging_sort(mid + 1, end);
@@ -134,6 +133,9 @@ public:
         int right = end - middle;
         T *leftData = new T[left];
         T *rightData = new T[right];
+
+        cout << "Mid = " << data[middle] << endl;
+
 
 
         for (int i = 0; i < left; i++) {
@@ -231,7 +233,7 @@ public:
             cout << "Loop " << j + 1 << ":" << print_arr(c, k + 1) << endl;
         }
 
-        cout << "Cumalative count array:";
+        cout << "Cumulative count array:";
         for (int i = 1; i < k + 1; i++) {
             c[i] += c[i - 1];
             cout << "Loop " << i - 1 << ":" << print_arr(c, k + 1) << endl;
@@ -322,7 +324,6 @@ public:
         cout << "Building Sorted Array:" << endl;
         cout << "Before Sorting Array: " << print_arr(data, size) << " - Cumulative Array: " << print_arr(c, 10) << endl;
         int b[size];
-
         for (int i = 0; i < size; i++) {
             b[i] = 0;
         }
@@ -345,7 +346,7 @@ public:
         int max = INT_MIN;
         for (int i = 0; i < size; i++) {
             if (data[i] > max) {
-                max = i;
+                max = data[i];
             }
         }
 
@@ -455,7 +456,9 @@ int main() {
                     break;
                 case 7: sorting.measureSortTime(&SortingSystem<int>::count_sort);
                     break;
-                case 8: sorting.measureSortTime(&SortingSystem<int>::radix_sort);
+                case 8:
+                    cout << "Radix" << endl;
+                    sorting.measureSortTime(&SortingSystem<int>::radix_sort);
                     break;
                 case 9: sorting.measureSortTime(&SortingSystem<int>::bucket_sort);
                     break;
