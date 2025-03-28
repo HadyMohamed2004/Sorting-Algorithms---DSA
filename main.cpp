@@ -14,9 +14,9 @@ string to_string(const T &value) {
     return oss.str();
 }
 
-template<typename T>
-string print_arr(const T *data, int size) {
-    string result = "[ ";
+template <typename T>
+string print_arr(const T* data, int size) {
+    string result = "[";
     for (int i = 0; i < size; ++i) {
         result += to_string(data[i]);
         if (i < size - 1) {
@@ -55,6 +55,7 @@ public:
             data[i] = temp;
         }
         file.close();
+
     }
 
     void setData(T *inputData, int n) {
@@ -125,12 +126,21 @@ public:
 
     void shell_sort() {
         for (int gap = size / 2; gap > 0; gap /= 2) {
+            cout<<"Gap: "<<gap<<endl;
             for (int i = gap; i < size; i++) {
                 T temp = data[i];
                 int j;
                 for (j = i; j >= gap && data[j - gap] > temp; j -= gap) {
+                    for (int k=0;k<size;k++) {
+                        if (k==j||k==j-gap) {
+                            cout<<"["<<data[k]<<"] ";
+                        }
+                        else cout<<data[k]<<' ';
+                    }
+                    cout<<endl;
                     data[j] = data[j - gap];
                 }
+
                 data[j] = temp;
             }
         }
@@ -286,9 +296,9 @@ public:
         }
         int range = max - min + 1;
 
-        int n_buckets = size / 2;
-        T **buckets = new T *[n_buckets];
-        int *buckets_size = new int[n_buckets]{0};
+        int n_buckets=size/4;
+        T **buckets=new T*[n_buckets];
+        int *buckets_size=new int[n_buckets]{0};
 
         for (int i = 0; i < n_buckets; i++) {
             buckets[i] = new T[size];
@@ -297,6 +307,14 @@ public:
         for (int i = 0; i < size; i++) {
             int index = (n_buckets * (data[i] - min)) / range;
             buckets[index][buckets_size[index]++] = data[i];
+        }
+        cout<<"Buckets before sorting :"<<endl;
+        for (int i = 0; i < n_buckets; i++) {
+            cout<<"Bucket "<<i+1<<": ";
+            for (int j = 0; j < buckets_size[i]; j++) {
+                cout<<buckets[i][j]<<" ";
+            }
+            cout<<endl;
         }
 
         for (int i = 0; i < n_buckets; i++) {
@@ -310,9 +328,17 @@ public:
                 buckets[i][k + 1] = temp;
             }
         }
-        int index = 0;
+        cout<<"Buckets after sorting :"<<endl;;
         for (int i = 0; i < n_buckets; i++) {
+            cout<<"Bucket "<<i+1<<": ";
             for (int j = 0; j < buckets_size[i]; j++) {
+                cout<<buckets[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        int index=0;
+        for (int i=0;i<n_buckets;i++) {
+            for (int j=0;j<buckets_size[i];j++) {
                 data[index++] = buckets[i][j];
             }
             delete[] buckets[i];
