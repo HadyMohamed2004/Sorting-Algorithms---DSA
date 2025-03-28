@@ -3,8 +3,28 @@
 #include <chrono>
 #include <string>
 #include <memory>
+#include <sstream>
 
 using namespace std;
+
+template <typename T>
+string to_string(const T& value) {
+    ostringstream oss;
+    oss << value;  // Try to use the stream to convert the value
+    return oss.str();
+}
+
+template <typename T>
+string print_arr(const T& data, int size) {
+    string result = "[ ";
+    for (int i = 0; i < size; ++i) {
+        result += to_string(data[i]);
+        if (i < size - 1) {
+            result += ", ";
+        }
+    }
+    return result + "]";
+}
 
 
 template<typename T>
@@ -101,6 +121,8 @@ public:
         if (start >= end)
             return;
         int mid = (start + end) / 2;
+        cout << "Mid = " << mid << endl;
+
         merging_sort(start, mid);
         merging_sort(mid + 1, end);
         merge(start, mid, end);
@@ -113,6 +135,7 @@ public:
         T *leftData = new T[left];
         T *rightData = new T[right];
 
+
         for (int i = 0; i < left; i++) {
             leftData[i] = data[start + i];
         }
@@ -120,6 +143,9 @@ public:
         for (int i = 0; i < right; i++) {
             rightData[i] = data[middle + 1 + i];
         }
+
+        cout << "Left: " << print_arr(leftData, left) << "| Right: " << print_arr(rightData, right) << endl;
+
 
         int i = 0, j = 0, k = start;
 
@@ -146,8 +172,11 @@ public:
             return;
         }
         int p = partition(left, right);
+        cout << "Left Part: " << print_arr(data, left) << " | Right Part: " << print_arr(data, right) << endl;
+
         quick_sort(left, p - 1);
         quick_sort(p + 1, right);
+
     }
 
     int partition(int left, int right) {
@@ -160,10 +189,14 @@ public:
             if (data[j] < pivot) {
                 i++;
                 swap(data[i], data[j]);
+                cout << "After swap: " << print_arr(data, right) << endl;
+
             }
-            // cout << print_arr() << endl;
+            cout << print_arr(data, size) << endl;
         }
         swap(data[i], data[left]);
+        cout << "After pivot swap: " << print_arr(data, right) << endl;
+
         return i;
     }
 
@@ -178,7 +211,7 @@ public:
                 k = data[i];
             }
         }
-        // cout << print_arr() << endl;
+        cout << print_arr(data, size) << endl;
 
 
         cout << "Count Array: ";
@@ -187,35 +220,33 @@ public:
         cout << "Greatest Element (k): " << k << endl;
 
 
-        // cout << "Loop 0:" << print_arr(c, k + 1) << endl;
+        cout << "Loop 0:" << print_arr(c, k + 1) << endl;
 
         for (int j = 0; j < size; j++) {
             c[data[j]]++;
-            // cout << "Loop " << j + 1 << ":" << print_arr(c, k + 1) << endl;
+            cout << "Loop " << j + 1 << ":" << print_arr(c, k + 1) << endl;
         }
 
         cout << "Cumalative count array:";
         for (int i = 1; i < k + 1; i++) {
             c[i] += c[i - 1];
-            // cout << "Loop " << i - 1 << ":" << print_arr(c, k + 1) << endl;
+            cout << "Loop " << i - 1 << ":" << print_arr(c, k + 1) << endl;
         }
 
         vector<int> b(size, 0);
 
-        // cout << "Sorted Array: " << print_arr(b, size) << " Cumulative count array:" << print_arr(c, k + 1) << endl;
+        cout << "Sorted Array: " << print_arr(b, size) << " Cumulative count array:" << print_arr(c, k + 1) << endl;
         for (int j = size - 1; j >= 0; j--) {
             b[c[data[j]] - 1] = data[j];
             c[data[j]]--;
             cout << "Loop" << j - size << ": " << endl;
-            // cout << "Sorted Array: " << print_arr(b, size) << " Cumulative count array:" << print_arr(c, k + 1) << endl;
+            cout << "Sorted Array: " << print_arr(b, size) << " Cumulative count array:" << print_arr(c, k + 1) << endl;
         }
 
         for (int i = 0; i < size; i++) {
             data[i] = b[i];
         }
 
-
-        // cout << "Final Sorted array: " << print_arr(b, size) << endl;
     }
 
     void bucket_sort() {
@@ -267,15 +298,56 @@ public:
     }
 
 
-    // string print_arr() {
-    //     string arr_s = "[";
-    //     for (int i = 0; i < size; i++) {
-    //         string element = data[i];
-    //         arr_s += element + ", ";
-    //     }
-    //     arr_s = arr_s.substr(0, arr_s.size() - 2) + "]";
-    //     return arr_s;
-    // }
+    void count_radix(int exp) {
+        vector<int> c = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+        for (int j = 0; j < size; j++) {
+            int n = (data[j] / exp) % 10;
+            c[n]++;
+        }
+
+        for (int i = 1; i < 10; i++) {
+            c[i] += c[i - 1];
+        }
+        cout << "Cumulative Count Array: " << print_arr(c, 10) << endl;
+
+
+        cout << "Building Sorted Array:" << endl;
+        cout << "Before Sorting Array: " << print_arr(data, size) << " - Cumulative Array: " << print_arr(c, 10) << endl;
+        vector<int> b(size, 0);
+        for (int j = size - 1; j >= 0; j--) {
+            int n = (data[j] / exp) % 10;
+            b[c[n] - 1] = data[j];
+            c[n]--;
+            cout << "Loop " << size - j << " Sorted Array: " << print_arr(b, size) << endl;
+        }
+
+        for (int i = 0; i < size; i++) {
+            data[i] = b[i];
+        }
+    }
+
+    void radix_sort() {
+        cout << "Current Array: " << print_arr(data, size) << endl;
+
+        int max = INT_MIN;
+        for (int i = 0; i < size; i++) {
+            if (data[i] > max) {
+                max = i;
+            }
+        }
+
+        int exp = 1;
+        while (exp < max) {
+            cout << endl << "Exponent: " << exp << endl;
+            count_radix(exp);
+            cout << "Final Array: " << print_arr(data, size) << endl;
+            exp *= 10;
+        }
+    }
+
+
+
 
     void displayData() {
         for (int i = 0; i < size; i++) {
@@ -316,7 +388,12 @@ public:
                 "9. Bucket Sort\n"
                 "Enter your choice (1-9): ";
     }
+
+    template <typename Te>
+    friend string print_arr(Te data, int size);
 };
+
+
 
 int main() {
     while (true) {
@@ -368,6 +445,8 @@ int main() {
                 case 6: sorting.measureSortTime(&SortingSystem<int>::quick_sort, 0, n - 1);
                     break;
                 case 7: sorting.measureSortTime(&SortingSystem<int>::count_sort);
+                    break;
+                case 8: sorting.measureSortTime(&SortingSystem<int>::radix_sort);
                     break;
                 case 9: sorting.measureSortTime(&SortingSystem<int>::bucket_sort);
                     break;
