@@ -103,13 +103,20 @@ public:
 
     void bubble_sort() {
         for (int i = 0; i < size - 1; i++) {
-            for (int j = size - 1; j > i; j--) {
-                if (data[j] < data[j - 1]) {
-                    swap(data[j], data[j - 1]);
+            for (int j = 0; j < size - i - 1; j++) {
+                if (data[j] > data[j + 1]) {
+                    cout << "Element getting swapped -> " << data[j] << ": ";
+                    for (int k = 0; k < size; k++) {
+                        if (k == j || k == j + 1) cout << "[" << data[k] << "] ";
+                        else cout << data[k] << ' ';
+                    }
+                    cout << endl;
+                    swap(data[j], data[j + 1]);
                 }
             }
         }
     }
+
 
     void shell_sort() {
         for (int gap = size / 2; gap > 0; gap /= 2) {
