@@ -71,12 +71,17 @@ public:
     void insertion_sort() {
         for (int i = 1; i < size; i++) {
             T temp = data[i];
+            cout << "Current Element: " << temp << endl;
             int j = i - 1;
             while (j >= 0 && data[j] > temp) {
+                cout << "   Swapping " << data[j + 1] << " with " << data[j] << endl;
                 data[j + 1] = data[j];
                 j--;
             }
+            cout << "   Putting " << temp << " In place of " << data[j + 1] << endl;
             data[j + 1] = temp;
+
+            cout << "Current Array: " << print_arr(data, size) << endl;
         }
     }
 
