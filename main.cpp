@@ -7,15 +7,15 @@
 
 using namespace std;
 
-template <typename T>
-string to_string(const T& value) {
+template<typename T>
+string to_string(const T &value) {
     ostringstream oss;
     oss << value;
     return oss.str();
 }
 
-template <typename T>
-string print_arr(const T* data, int size) {
+template<typename T>
+string print_arr(const T *data, int size) {
     string result = "[ ";
     for (int i = 0; i < size; ++i) {
         result += to_string(data[i]);
@@ -55,7 +55,6 @@ public:
             data[i] = temp;
         }
         file.close();
-
     }
 
     void setData(T *inputData, int n) {
@@ -84,12 +83,21 @@ public:
     void selection_sort() {
         for (int i = 0; i < size - 1; i++) {
             int min = i;
+            cout << "Current Minimum: " << data[i] << endl;
             for (int j = i + 1; j < size; j++) {
+                cout << "   Comparing " << data[min] << " and " << data[j] << " -> ";
                 if (data[j] < data[min]) {
                     min = j;
+                    cout << "Changing Minimum to: " << data[min] << endl;
+                } else {
+                    cout << "No Changing Minimum" << endl;
                 }
             }
+
+            cout << "   Swapping " << data[i] << " and " << data[min] << endl;
             swap(data[i], data[min]);
+
+            cout << "Iteration " << i + 1 << ": " << print_arr(data, size) << endl;
         }
     }
 
@@ -137,7 +145,6 @@ public:
         cout << "Mid = " << data[middle] << endl;
 
 
-
         for (int i = 0; i < left; i++) {
             leftData[i] = data[start + i];
         }
@@ -178,7 +185,6 @@ public:
 
         quick_sort(left, p - 1);
         quick_sort(p + 1, right);
-
     }
 
     int partition(int left, int right) {
@@ -192,7 +198,6 @@ public:
                 i++;
                 swap(data[i], data[j]);
                 cout << "After swap: " << print_arr(data, right) << endl;
-
             }
             cout << print_arr(data, size) << endl;
         }
@@ -217,7 +222,7 @@ public:
 
 
         cout << "Count Array: ";
-        int c[k+1];
+        int c[k + 1];
 
         for (int i = 0; i < k; i++) {
             c[i] = 0;
@@ -255,11 +260,10 @@ public:
         for (int i = 0; i < size; i++) {
             data[i] = b[i];
         }
-
     }
 
     void bucket_sort() {
-        T min = data[0],max = data[0];
+        T min = data[0], max = data[0];
         for (int i = 1; i < size; i++) {
             if (data[i] < min) {
                 min = data[i];
@@ -268,35 +272,35 @@ public:
                 max = data[i];
             }
         }
-        int range=max - min + 1;
+        int range = max - min + 1;
 
-        int n_buckets=size/2;
-        T **buckets=new T*[n_buckets];
-        int *buckets_size=new int[n_buckets]{0};
+        int n_buckets = size / 2;
+        T **buckets = new T *[n_buckets];
+        int *buckets_size = new int[n_buckets]{0};
 
         for (int i = 0; i < n_buckets; i++) {
             buckets[i] = new T[size];
         }
 
         for (int i = 0; i < size; i++) {
-            int index=(n_buckets * (data[i] - min)) / range;
+            int index = (n_buckets * (data[i] - min)) / range;
             buckets[index][buckets_size[index]++] = data[i];
         }
 
         for (int i = 0; i < n_buckets; i++) {
-            for (int j=1;j<buckets_size[i];j++) {
-                T temp=buckets[i][j];
-                int k= j-1;
-                while (k>=0 && buckets[i][k] > temp) {
-                    buckets[i][k+1]=buckets[i][k];
+            for (int j = 1; j < buckets_size[i]; j++) {
+                T temp = buckets[i][j];
+                int k = j - 1;
+                while (k >= 0 && buckets[i][k] > temp) {
+                    buckets[i][k + 1] = buckets[i][k];
                     k--;
                 }
-                buckets[i][k+1]=temp;
+                buckets[i][k + 1] = temp;
             }
         }
-        int index=0;
-        for (int i=0;i<n_buckets;i++) {
-            for (int j=0;j<buckets_size[i];j++) {
+        int index = 0;
+        for (int i = 0; i < n_buckets; i++) {
+            for (int j = 0; j < buckets_size[i]; j++) {
                 data[index++] = buckets[i][j];
             }
             delete[] buckets[i];
@@ -322,7 +326,8 @@ public:
 
 
         cout << "Building Sorted Array:" << endl;
-        cout << "Before Sorting Array: " << print_arr(data, size) << " - Cumulative Array: " << print_arr(c, 10) << endl;
+        cout << "Before Sorting Array: " << print_arr(data, size) << " - Cumulative Array: " << print_arr(c, 10) <<
+                endl;
         int b[size];
         for (int i = 0; i < size; i++) {
             b[i] = 0;
@@ -399,10 +404,9 @@ public:
                 "Enter your choice (1-9): ";
     }
 
-    template <typename Te>
+    template<typename Te>
     friend string print_arr(Te data, int size);
 };
-
 
 
 int main() {
