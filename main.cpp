@@ -150,6 +150,74 @@ public:
         quick_sort(p + 1, right);
     }
 
+    int partition(int left, int right) {
+        T pivot = data[left];
+
+        cout << "Pivot: " << pivot << endl;
+        int i = left;
+        for (int j = left + 1; j <= right; j++) {
+            cout << "Comparing: " << pivot << " and " << data[j] << endl;
+            if (data[j] < pivot) {
+                i++;
+                swap(data[i], data[j]);
+            }
+            // cout << print_arr() << endl;
+        }
+        swap(data[i], data[left]);
+        return i;
+    }
+
+
+    void count_sort() {
+        int k = INT_MIN; // max
+
+        cout << "Current Array: ";
+
+        for (int i = 0; i < size; i++) {
+            if (data[i] > k) {
+                k = data[i];
+            }
+        }
+        // cout << print_arr() << endl;
+
+
+        cout << "Count Array: ";
+        vector<int> c((k + 1), 0);
+
+        cout << "Greatest Element (k): " << k << endl;
+
+
+        // cout << "Loop 0:" << print_arr(c, k + 1) << endl;
+
+        for (int j = 0; j < size; j++) {
+            c[data[j]]++;
+            // cout << "Loop " << j + 1 << ":" << print_arr(c, k + 1) << endl;
+        }
+
+        cout << "Cumalative count array:";
+        for (int i = 1; i < k + 1; i++) {
+            c[i] += c[i - 1];
+            // cout << "Loop " << i - 1 << ":" << print_arr(c, k + 1) << endl;
+        }
+
+        vector<int> b(size, 0);
+
+        // cout << "Sorted Array: " << print_arr(b, size) << " Cumulative count array:" << print_arr(c, k + 1) << endl;
+        for (int j = size - 1; j >= 0; j--) {
+            b[c[data[j]] - 1] = data[j];
+            c[data[j]]--;
+            cout << "Loop" << j - size << ": " << endl;
+            // cout << "Sorted Array: " << print_arr(b, size) << " Cumulative count array:" << print_arr(c, k + 1) << endl;
+        }
+
+        for (int i = 0; i < size; i++) {
+            data[i] = b[i];
+        }
+
+
+        // cout << "Final Sorted array: " << print_arr(b, size) << endl;
+    }
+
     void bucket_sort() {
         T min = data[0],max = data[0];
         for (int i = 1; i < size; i++) {
@@ -198,32 +266,16 @@ public:
         delete[] buckets_size;
     }
 
-    int partition(int left, int right) {
-        T pivot = data[left];
 
-        cout << "Pivot: " << pivot << endl;
-        int i = left;
-        for (int j = left + 1; j <= right; j++) {
-            cout << "Comparing: " << pivot << " and " << data[j] << endl;
-            if (data[j] < pivot) {
-                i++;
-                swap(data[i], data[j]);
-            }
-            cout << print_arr() << endl;
-        }
-        swap(data[i], data[left]);
-        return i;
-    }
-
-
-    string print_arr() {
-        string arr_s = "[";
-        for (int i = 0; i < size; i++) {
-            arr_s += to_string(data[i]) + ", ";
-        }
-        arr_s = arr_s.substr(0, arr_s.size() - 2) + "]";
-        return arr_s;
-    }
+    // string print_arr() {
+    //     string arr_s = "[";
+    //     for (int i = 0; i < size; i++) {
+    //         string element = data[i];
+    //         arr_s += element + ", ";
+    //     }
+    //     arr_s = arr_s.substr(0, arr_s.size() - 2) + "]";
+    //     return arr_s;
+    // }
 
     void displayData() {
         for (int i = 0; i < size; i++) {
@@ -315,6 +367,8 @@ int main() {
                     break;
                 case 6: sorting.measureSortTime(&SortingSystem<int>::quick_sort, 0, n - 1);
                     break;
+                case 7: sorting.measureSortTime(&SortingSystem<int>::count_sort);
+                    break;
                 case 9: sorting.measureSortTime(&SortingSystem<int>::bucket_sort);
                     break;
 
@@ -349,6 +403,8 @@ int main() {
                     break;
                 case 5: sorting.measureSortTime(&SortingSystem<string>::merging_sort, 0, n - 1);
                     break;
+                case 6: sorting.measureSortTime(&SortingSystem<string>::quick_sort, 0, n - 1);
+                    break;
                 default: cout << "Invalid choice!\n";
             }
 
@@ -379,6 +435,8 @@ int main() {
                 case 4: sorting.measureSortTime(&SortingSystem<float>::shell_sort);
                     break;
                 case 5: sorting.measureSortTime(&SortingSystem<float>::merging_sort, 0, n - 1);
+                    break;
+                case 6: sorting.measureSortTime(&SortingSystem<float>::quick_sort, 0, n - 1);
                     break;
                 case 9: sorting.measureSortTime(&SortingSystem<float>::bucket_sort);
                 default: cout << "Invalid choice!\n";
@@ -413,8 +471,10 @@ int main() {
                     break;
                 case 5: sorting.measureSortTime(&SortingSystem<char>::merging_sort, 0, n - 1);
                     break;
+                case 6: sorting.measureSortTime(&SortingSystem<char>::quick_sort, 0, n - 1);
+                    break;
                 case 9: sorting.measureSortTime(&SortingSystem<char>::bucket_sort);
-                break;
+                    break;
                 default: cout << "Invalid choice!\n";
             }
 
