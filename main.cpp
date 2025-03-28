@@ -15,7 +15,7 @@ string to_string(const T& value) {
 }
 
 template <typename T>
-string print_arr(const T& data, int size) {
+string print_arr(const T* data, int size) {
     string result = "[ ";
     for (int i = 0; i < size; ++i) {
         result += to_string(data[i]);
@@ -215,7 +215,11 @@ public:
 
 
         cout << "Count Array: ";
-        vector<int> c((k + 1), 0);
+        int c[k+1];
+
+        for (int i = 0; i < k; i++) {
+            c[i] = 0;
+        }
 
         cout << "Greatest Element (k): " << k << endl;
 
@@ -233,7 +237,10 @@ public:
             cout << "Loop " << i - 1 << ":" << print_arr(c, k + 1) << endl;
         }
 
-        vector<int> b(size, 0);
+        int b[size];
+        for (int i = 0; i < size; i++) {
+            b[i] = 0;
+        }
 
         cout << "Sorted Array: " << print_arr(b, size) << " Cumulative count array:" << print_arr(c, k + 1) << endl;
         for (int j = size - 1; j >= 0; j--) {
@@ -299,7 +306,7 @@ public:
 
 
     void count_radix(int exp) {
-        vector<int> c = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        int c[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         for (int j = 0; j < size; j++) {
             int n = (data[j] / exp) % 10;
@@ -314,7 +321,12 @@ public:
 
         cout << "Building Sorted Array:" << endl;
         cout << "Before Sorting Array: " << print_arr(data, size) << " - Cumulative Array: " << print_arr(c, 10) << endl;
-        vector<int> b(size, 0);
+        int b[size];
+
+        for (int i = 0; i < size; i++) {
+            b[i] = 0;
+        }
+
         for (int j = size - 1; j >= 0; j--) {
             int n = (data[j] / exp) % 10;
             b[c[n] - 1] = data[j];
