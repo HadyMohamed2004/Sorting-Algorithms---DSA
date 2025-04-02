@@ -403,10 +403,14 @@ public:
     }
 
     void displayData() {
+        cout<<"[";
         for (int i = 0; i < size; i++) {
-            cout << data[i] << " ";
+            cout << data[i];
+            if (i < size - 1) {
+                cout<<", ";
+            }
         }
-        cout << endl;
+        cout<<"]"<<endl;
     }
 
     void measureSortTime(void (SortingSystem::*sortFunc)()) {
