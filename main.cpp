@@ -485,6 +485,7 @@ int main() {
                 sorting.setData(data, n);
                 delete [] data;
             }
+
             sorting.showMenu();
             cin >> choice;
             switch (choice) {
