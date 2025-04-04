@@ -69,7 +69,7 @@ public:
     }
 
 
-    void insertion_sort() {
+    void insertionSort() {
         for (int i = 1; i < size; i++) {
             T temp = data[i];
             cout << "Current Element: " << temp << endl;
@@ -86,7 +86,7 @@ public:
         }
     }
 
-    void selection_sort() {
+    void selectionSort() {
         for (int i = 0; i < size - 1; i++) {
             int min = i;
             cout << "Current Minimum: " << data[i] << endl;
@@ -107,7 +107,7 @@ public:
         }
     }
 
-    void bubble_sort() {
+    void bubbleSort() {
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
                 if (data[j] > data[j + 1]) {
@@ -124,7 +124,7 @@ public:
     }
 
 
-    void shell_sort() {
+    void shellSort() {
         for (int gap = size / 2; gap > 0; gap /= 2) {
             cout<<"Gap: "<<gap<<endl;
             for (int i = gap; i < size; i++) {
@@ -147,13 +147,13 @@ public:
     }
 
 
-    void merging_sort(int start, int end) {
+    void mergeSort(int start, int end) {
         if (start >= end)
             return;
         int mid = (start + end) / 2;
 
-        merging_sort(start, mid);
-        merging_sort(mid + 1, end);
+        mergeSort(start, mid);
+        mergeSort(mid + 1, end);
         merge(start, mid, end);
     }
 
@@ -198,15 +198,15 @@ public:
     }
 
 
-    void quick_sort(int left, int right) {
+    void quickSort(int left, int right) {
         if (left >= right) {
             return;
         }
         int p = partition(left, right);
         cout << "Left Part: " << print_arr(data, left) << " | Right Part: " << print_arr(data, right) << endl;
 
-        quick_sort(left, p - 1);
-        quick_sort(p + 1, right);
+        quickSort(left, p - 1);
+        quickSort(p + 1, right);
     }
 
     int partition(int left, int right) {
@@ -230,7 +230,7 @@ public:
     }
 
 
-    void count_sort() {
+    void countSort() {
         int k = INT_MIN; // max
 
         cout << "Current Array: ";
@@ -284,7 +284,7 @@ public:
         }
     }
 
-    void bucket_sort() {
+    void bucketsort() {
         T min = data[0], max = data[0];
         for (int i = 1; i < size; i++) {
             if (data[i] < min) {
@@ -383,7 +383,7 @@ public:
         }
     }
 
-    void radix_sort() {
+    void radixSort() {
         cout << "Current Array: " << print_arr(data, size) << endl;
 
         int max = INT_MIN;
@@ -488,25 +488,25 @@ int main() {
             sorting.showMenu();
             cin >> choice;
             switch (choice) {
-                case 1: sorting.measureSortTime(&SortingSystem<int>::insertion_sort);
+                case 1: sorting.measureSortTime(&SortingSystem<int>::insertionSort);
                     break;
-                case 2: sorting.measureSortTime(&SortingSystem<int>::selection_sort);
+                case 2: sorting.measureSortTime(&SortingSystem<int>::selectionSort);
                     break;
-                case 3: sorting.measureSortTime(&SortingSystem<int>::bubble_sort);
+                case 3: sorting.measureSortTime(&SortingSystem<int>::bubbleSort);
                     break;
-                case 4: sorting.measureSortTime(&SortingSystem<int>::shell_sort);
+                case 4: sorting.measureSortTime(&SortingSystem<int>::shellSort);
                     break;
-                case 5: sorting.measureSortTime(&SortingSystem<int>::merging_sort, 0, n - 1);
+                case 5: sorting.measureSortTime(&SortingSystem<int>::mergeSort, 0, n - 1);
                     break;
-                case 6: sorting.measureSortTime(&SortingSystem<int>::quick_sort, 0, n - 1);
+                case 6: sorting.measureSortTime(&SortingSystem<int>::quickSort, 0, n - 1);
                     break;
-                case 7: sorting.measureSortTime(&SortingSystem<int>::count_sort);
+                case 7: sorting.measureSortTime(&SortingSystem<int>::countSort);
                     break;
                 case 8:
                     cout << "Radix" << endl;
-                    sorting.measureSortTime(&SortingSystem<int>::radix_sort);
+                    sorting.measureSortTime(&SortingSystem<int>::radixSort);
                     break;
-                case 9: sorting.measureSortTime(&SortingSystem<int>::bucket_sort);
+                case 9: sorting.measureSortTime(&SortingSystem<int>::bucketsort);
                     break;
 
                 default: cout << "Invalid choice!\n";
@@ -530,17 +530,17 @@ int main() {
             sorting.showMenu();
             cin >> choice;
             switch (choice) {
-                case 1: sorting.measureSortTime(&SortingSystem<string>::insertion_sort);
+                case 1: sorting.measureSortTime(&SortingSystem<string>::insertionSort);
                     break;
-                case 2: sorting.measureSortTime(&SortingSystem<string>::selection_sort);
+                case 2: sorting.measureSortTime(&SortingSystem<string>::selectionSort);
                     break;
-                case 3: sorting.measureSortTime(&SortingSystem<string>::bubble_sort);
+                case 3: sorting.measureSortTime(&SortingSystem<string>::bubbleSort);
                     break;
-                case 4: sorting.measureSortTime(&SortingSystem<string>::shell_sort);
+                case 4: sorting.measureSortTime(&SortingSystem<string>::shellSort);
                     break;
-                case 5: sorting.measureSortTime(&SortingSystem<string>::merging_sort, 0, n - 1);
+                case 5: sorting.measureSortTime(&SortingSystem<string>::mergeSort, 0, n - 1);
                     break;
-                case 6: sorting.measureSortTime(&SortingSystem<string>::quick_sort, 0, n - 1);
+                case 6: sorting.measureSortTime(&SortingSystem<string>::quickSort, 0, n - 1);
                     break;
                 default: cout << "Invalid choice!\n";
             }
@@ -563,19 +563,19 @@ int main() {
             sorting.showMenu();
             cin >> choice;
             switch (choice) {
-                case 1: sorting.measureSortTime(&SortingSystem<float>::insertion_sort);
+                case 1: sorting.measureSortTime(&SortingSystem<float>::insertionSort);
                     break;
-                case 2: sorting.measureSortTime(&SortingSystem<float>::selection_sort);
+                case 2: sorting.measureSortTime(&SortingSystem<float>::selectionSort);
                     break;
-                case 3: sorting.measureSortTime(&SortingSystem<float>::bubble_sort);
+                case 3: sorting.measureSortTime(&SortingSystem<float>::bubbleSort);
                     break;
-                case 4: sorting.measureSortTime(&SortingSystem<float>::shell_sort);
+                case 4: sorting.measureSortTime(&SortingSystem<float>::shellSort);
                     break;
-                case 5: sorting.measureSortTime(&SortingSystem<float>::merging_sort, 0, n - 1);
+                case 5: sorting.measureSortTime(&SortingSystem<float>::mergeSort, 0, n - 1);
                     break;
-                case 6: sorting.measureSortTime(&SortingSystem<float>::quick_sort, 0, n - 1);
+                case 6: sorting.measureSortTime(&SortingSystem<float>::quickSort, 0, n - 1);
                     break;
-                case 9: sorting.measureSortTime(&SortingSystem<float>::bucket_sort);
+                case 9: sorting.measureSortTime(&SortingSystem<float>::bucketsort);
                 default: cout << "Invalid choice!\n";
             }
 
@@ -598,19 +598,19 @@ int main() {
             sorting.showMenu();
             cin >> choice;
             switch (choice) {
-                case 1: sorting.measureSortTime(&SortingSystem<char>::insertion_sort);
+                case 1: sorting.measureSortTime(&SortingSystem<char>::insertionSort);
                     break;
-                case 2: sorting.measureSortTime(&SortingSystem<char>::selection_sort);
+                case 2: sorting.measureSortTime(&SortingSystem<char>::selectionSort);
                     break;
-                case 3: sorting.measureSortTime(&SortingSystem<char>::bubble_sort);
+                case 3: sorting.measureSortTime(&SortingSystem<char>::bubbleSort);
                     break;
-                case 4: sorting.measureSortTime(&SortingSystem<char>::shell_sort);
+                case 4: sorting.measureSortTime(&SortingSystem<char>::shellSort);
                     break;
-                case 5: sorting.measureSortTime(&SortingSystem<char>::merging_sort, 0, n - 1);
+                case 5: sorting.measureSortTime(&SortingSystem<char>::mergeSort, 0, n - 1);
                     break;
-                case 6: sorting.measureSortTime(&SortingSystem<char>::quick_sort, 0, n - 1);
+                case 6: sorting.measureSortTime(&SortingSystem<char>::quickSort, 0, n - 1);
                     break;
-                case 9: sorting.measureSortTime(&SortingSystem<char>::bucket_sort);
+                case 9: sorting.measureSortTime(&SortingSystem<char>::bucketsort);
                     break;
                 default: cout << "Invalid choice!\n";
             }
